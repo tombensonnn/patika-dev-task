@@ -1,19 +1,34 @@
+const router = require('@koa/router')();
+
 const Koa = require('koa');
 const app = new Koa();
 
-app.use(async ctx => {
+async function indexPage(ctx){
+    ctx.status = 200;
+    ctx.body = '<h1>WELCOME TO INDEX PAGE</h1>';
+}
 
-    const url = ctx.url;
+router.get('/', indexPage);
+router.get('/index', indexPage);
 
-    if(url === '/'){
-        ctx.body = 'INDEX PAGE';
-    }
-    else if(url === '/about'){
-        ctx.body = 'ABOUT PAGE';
-    }
-    else if(url === '/contact'){
-        ctx.body = 'CONTACT PAGE';
-    }
-});
+async function aboutPage(ctx) {
+    ctx.status = 200;
+    ctx.body = '<h1>WELCOME TO ABOUT PAGE</h1>';
+}
 
-app.listen(3000);
+router.get('/about', aboutPage);
+
+async function contactPage(ctx) {
+    ctx.status = 200;
+    ctx.body = '<h1>WELCOME TO CONTACT PAGE</h1>';
+}
+
+router.get('/contact', contactPage);
+
+app.use(router.routes());
+
+
+
+const port = 3000;
+
+app.listen(port);
